@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>032 Atelier — Interior Design Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@100;200;300&family=Wire+One&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFFFFF;
+    --sand: #E8E8E8;
+    --warm-gray: #AAAAAA;
+    --stone: #888888;
+    --charcoal: #2A2A2A;
+    --espresso: #1A1A1A;
+    --accent: #1A1A1A;
+    --white: #FFFFFF;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--charcoal);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.5s, backdrop-filter 0.5s, padding 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    padding: 1rem 3rem;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+
+  .logo {
+    font-family: 'Wire One', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--stone);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .nav-links a:hover { color: #fcb8db; }
+  .nav-links a:hover::after { width: 0; }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(200, 200, 200, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(230, 230, 230, 0.4) 0%, transparent 50%),
+      var(--cream);
+  }
+
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 2rem;
+    pointer-events: none;
+  }
+
+  .hero-content a, .hero-content button {
+    pointer-events: auto;
+  }
+
+  .hero-tagline {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-headline {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.4em;
+    white-space: nowrap;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hw-big {
+    font-family: 'Wire One', sans-serif;
+    font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: color 0.3s;
+    pointer-events: auto;
+  }
+
+  .hw-big:hover, .hw-small:hover { cursor: default; }
+  .hw-highlighted { color: #fcb8db !important; transition: color 0.3s; }
+
+  .hw-small {
+    font-family: 'Wire One', sans-serif;
+    font-size: clamp(0.8rem, 1.8vw, 1.6rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    cursor: default;
+    transition: color 0.3s;
+    pointer-events: auto;
+  }
+
+  /* cross-highlight handled via JS */
+
+  .hero-line {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 2.5rem auto;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--stone);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+  }
+
+  .hero-cta a {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--espresso);
+    border: 1px solid var(--warm-gray);
+    padding: 1rem 2.8rem;
+    transition: all 0.4s;
+    display: inline-block;
+  }
+
+  .hero-cta a:hover {
+    background: var(--espresso);
+    color: var(--cream);
+    border-color: var(--espresso);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.5s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--warm-gray), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* ── SECTIONS COMMON ── */
+  section {
+    padding: 8rem 3rem;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    color: var(--espresso);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* ── PORTFOLIO ── */
+  #portfolio {
+    background: var(--white);
+  }
+
+  .portfolio-header {
+    width: 100%;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .portfolio-section-link {
+    text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+  }
+
+  .portfolio-section-link:hover .portfolio-label-big {
+    color: #fcb8db;
+  }
+
+  .portfolio-see-all {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    font-weight: 300;
+    transition: color 0.3s;
+    display: block;
+  }
+
+  .portfolio-section-link:hover .portfolio-see-all {
+    color: #fcb8db;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .portfolio-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: var(--sand);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%);
+    transition: filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .portfolio-item:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.03);
+  }
+
+  .portfolio-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    background: linear-gradient(135deg, var(--sand) 0%, var(--warm-gray) 100%);
+    opacity: 0.6;
+    filter: grayscale(100%);
+    transition: filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .portfolio-item:hover .portfolio-placeholder {
+    filter: grayscale(0%);
+  }
+
+  .portfolio-placeholder svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--stone);
+    fill: none;
+    stroke-width: 1;
+  }
+
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(42, 37, 35, 0.8) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 2.5rem;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .portfolio-item:hover .portfolio-overlay {
+    opacity: 1;
+  }
+
+  .portfolio-overlay h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--cream);
+  }
+
+  .portfolio-overlay p {
+    color: var(--warm-gray);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--cream);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .about-image {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--sand), var(--warm-gray));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-image::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    border: 1px solid var(--accent);
+    opacity: 0.4;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--stone);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-label-big.section-label {
+    font-family: 'Wire One', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 2.5rem;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .about-label-big.section-label:hover { color: #fcb8db; }
+
+  .portfolio-label-big.section-label {
+    font-family: 'Wire One', sans-serif;
+    font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .portfolio-label-big.section-label:hover { color: #fcb8db; }
+
+  .about-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--sand);
+  }
+
+  .stat h4 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--espresso);
+  }
+
+  .stat span {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--espresso);
+    color: var(--cream);
+  }
+
+  #services .section-label { color: var(--stone); }
+
+  .services-header {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+  }
+
+  .services-label-big.section-label {
+    font-family: 'Saira Extra Condensed', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 200;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 2rem;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .services-label-big.section-label:hover { color: #fcb8db; }
+
+  .services-grid {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+  }
+
+  .service-card {
+    padding: 3rem 2.5rem;
+    background: var(--espresso);
+    transition: background 0.4s;
+    cursor: default;
+    flex: 1;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .service-card:last-child {
+    border-right: none;
+  }
+
+  .service-card:hover {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .service-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--warm-gray);
+    margin-bottom: 1.5rem;
+    opacity: 0.3;
+  }
+
+  .service-card h3 {
+    font-family: 'Saira Extra Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 200;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--cream);
+  }
+
+  .service-card > p {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--warm-gray);
+  }
+
+  .service-expand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    transition: color 0.3s;
+    padding: 0;
+  }
+
+  .service-expand:hover { color: #fcb8db; }
+
+  .service-expand svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    transition: transform 0.3s;
+  }
+
+  .service-expand.open svg {
+    transform: rotate(180deg);
+  }
+
+  .service-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s;
+    opacity: 0;
+  }
+
+  .service-details.open {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  .service-details ul {
+    list-style: none;
+    padding: 1.2rem 0 0;
+  }
+
+  .service-details li {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--warm-gray);
+    padding: 0.4rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .service-details li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ── PUBLICATIONS ── */
+  #publications {
+    background: var(--white);
+    padding: 8rem 3rem;
+  }
+
+  .publications-header {
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+  }
+
+  .publications-label-big.section-label {
+    font-family: 'Wire One', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 2rem;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .publications-label-big.section-label:hover { color: #fcb8db; }
+
+  .publications-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pub-card {
+    display: block;
+    text-decoration: none;
+    padding: 2.5rem;
+    border: 1px solid var(--sand);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .pub-card:hover {
+    border-color: #fcb8db;
+    transform: translateY(-4px);
+  }
+
+  .pub-source {
+    font-family: 'Wire One', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+  }
+
+  .pub-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+
+  .pub-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--stone);
+    margin-bottom: 1.5rem;
+  }
+
+  .pub-link {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    transition: color 0.3s;
+    font-weight: 400;
+  }
+
+  .pub-card:hover .pub-link { color: #fcb8db; }
+
+  @media (max-width: 700px) {
+    .publications-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--white);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .contact-info {
+    padding-top: 1rem;
+  }
+
+  .contact-info p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--stone);
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-detail {
+    margin-bottom: 2rem;
+  }
+
+  .contact-detail label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-detail a, .contact-detail span {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--espresso);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-detail a:hover { color: var(--accent); }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 1rem 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--sand);
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--warm-gray);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-bottom-color: var(--accent);
+  }
+
+  .form-group textarea { min-height: 120px; }
+
+  .submit-btn {
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--espresso);
+    border: 1px solid var(--espresso);
+    padding: 1rem 3rem;
+    cursor: pointer;
+    transition: all 0.4s;
+    margin-top: 1rem;
+  }
+
+  .submit-btn:hover {
+    background: transparent;
+    color: var(--espresso);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem;
+    background: var(--cream);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--sand);
+  }
+
+  footer span {
+    font-size: 0.75rem;
+    color: var(--warm-gray);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 0.72rem;
+    color: var(--stone);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--espresso); }
+
+  /* ── REVEAL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* ── LANGUAGE SWITCHER ── */
+  .lang-switch {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    margin-left: 1.5rem;
+  }
+
+  .lang-switch button {
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    transition: color 0.3s;
+  }
+
+  .lang-switch button.active {
+    color: var(--espresso);
+    font-weight: 500;
+  }
+
+  .lang-switch button:hover {
+    color: var(--accent);
+  }
+
+  .lang-divider {
+    color: var(--warm-gray);
+    font-size: 0.7rem;
+    user-select: none;
+  }
+
+  /* ── MOBILE ── */
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .mobile-toggle span {
+    width: 22px;
+    height: 1px;
+    background: var(--espresso);
+    transition: all 0.3s;
+  }
+
+  @media (max-width: 900px) {
+    section { padding: 5rem 1.5rem; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { flex-direction: column; }
+    .mobile-toggle { display: flex; }
+    .nav-links {
+      position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+      background: var(--cream); flex-direction: column;
+      justify-content: center; align-items: center; gap: 2rem;
+      transition: right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: -10px 0 40px rgba(0,0,0,0.05);
+    }
+    .nav-links.open { right: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.5rem; }
+    .about-stats { gap: 2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="logo">032 Atelier</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="portfolio.html" onclick="closeNav()" data-i18n="nav_portfolio">Projects</a></li>
+    <li><a href="#about" onclick="closeNav()" data-i18n="nav_about">About</a></li>
+    <li><a href="#services" onclick="closeNav()" data-i18n="nav_services">Services</a></li>
+    <li><a href="#publications" onclick="closeNav()" data-i18n="nav_publications">Publications</a></li>
+    <li><a href="#contact" onclick="closeNav()" data-i18n="nav_contact">Contact</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button id="langEN" class="active" onclick="setLang('en')">EN</button>
+    <span class="lang-divider">|</span>
+    <button id="langPL" onclick="setLang('pl')">PL</button>
+  </div>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tagline" data-i18n="hero_tagline">Interior Design Studio</p>
+    <h1 class="hero-headline"><span class="hw-big" data-i18n="hero_word1">functionality</span> <span class="hw-small" data-i18n="hero_between">and everything in between</span> <span class="hw-big" data-i18n="hero_word2">design</span></h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub" data-i18n="hero_sub">We craft considered interiors that balance beauty and function — designing spaces where life unfolds naturally.</p>
+    <div class="hero-cta">
+      <a href="portfolio.html" data-i18n="hero_cta">View Our Work</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span data-i18n="scroll">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-image reveal">
+      <img src="images/about-photo.png" alt="032 Atelier — Team" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label about-label-big" data-i18n="about_label">About Us</p>
+      <p data-i18n="about_p1">032 Atelier is a design studio born from a desire to create beauty and meaning in space. We believe that the environment we live in has a profound impact on our emotions and everyday life. That's why we design interiors that not only captivate with their aesthetics, but also make you feel natural and at ease.</p>
+      <p data-i18n="about_p2">Every project is a new story for us. We listen carefully, observe, and strive to truly understand our clients — their needs, daily rhythm, and dreams. We want our collaboration to be a calm, enjoyable journey toward creating a place that becomes a true home.</p>
+      <p data-i18n="about_p3">We don't limit ourselves to one style. We love projects with character and a touch of boldness that reflect the personality of their owners. We passionately discover the potential of every space — from modern apartments to interiors with history, where new life can be breathed in.</p>
+      <p data-i18n="about_p4">We don't create interiors for show — we design so that every detail has meaning and builds real value. If you think about space the way we do, we invite you to create exceptional interiors together.</p>
+      <div class="about-stats">
+        <div class="stat">
+          <h4>12+</h4>
+          <span data-i18n="stat_years">Years experience</span>
+        </div>
+        <div class="stat">
+          <h4>85</h4>
+          <span data-i18n="stat_projects">Projects completed</span>
+        </div>
+        <div class="stat">
+          <h4>3</h4>
+          <span data-i18n="stat_countries">Countries</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <p class="section-label services-label-big" data-i18n="services_label">Zakres Usług</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-number">01</div>
+      <h3 data-i18n="svc1_title">Projekt Kompleksowy</h3>
+      <p data-i18n="svc1_desc">Kompleksowy projekt wnętrza to pełne opracowanie Twojej przestrzeni – od pierwszej koncepcji po gotowy projekt techniczny. To idealna opcja, jeśli chcesz samodzielnie zrealizować aranżację, ale potrzebujesz profesjonalnego planu, wizualizacji i szczegółowych wytycznych dla wykonawców.</p>
+      <button class="service-expand" onclick="toggleDetails(this)" data-i18n="svc_details_btn">Details <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="service-details" data-i18n-html="svc1_details">
+        <ul>
+          <li>Inwentaryzacja wnętrza – dokładne pomiary przestrzeni wraz z dokumentacją fotograficzną.</li>
+          <li>2–3 układy funkcjonalne – różne propozycje aranżacji, dopasowane do Twoich potrzeb i stylu życia.</li>
+          <li>Wizualizacje 3D – realistyczne ujęcia pomieszczeń, które pozwolą Ci zobaczyć efekt końcowy przed realizacją.</li>
+          <li>Zestawienie materiałów i mebli – szczegółowa lista elementów użytych w projekcie wraz z opisem i linkami do producentów.</li>
+          <li>Dokumentacja techniczna – rysunki wykonawcze dla ekipy budowlanej i stolarza.</li>
+          <li>Kosztorys i lista wyposażenia – pomoc w zaplanowaniu budżetu oraz kontrola wydatków.</li>
+          <li>Spotkanie z wykonawcami – omówienie założeń projektu i przekazanie pełnej dokumentacji realizacyjnej.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">02</div>
+      <h3 data-i18n="svc2_title">Projekt z Nadzorem Autorskim</h3>
+      <p data-i18n="svc2_desc">To rozwiązanie dla osób, które chcą mieć pewność, że realizacja projektu przebiegnie dokładnie zgodnie z założeniami. Dzięki stałej opiece projektanta każdy etap prac jest kontrolowany z dbałością o detale, co gwarantuje efekt zgodny z wizją.</p>
+      <button class="service-expand" onclick="toggleDetails(this)" data-i18n="svc_details_btn">Details <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="service-details" data-i18n-html="svc2_details">
+        <ul>
+          <li>Wszystko z „Projektu Kompleksowego", a dodatkowo:</li>
+          <li>Konsultacje z projektantem w trakcie realizacji – bieżące wsparcie i doradztwo na każdym etapie.</li>
+          <li>Spotkania na budowie – kontrola postępu prac oraz weryfikacja zgodności z projektem.</li>
+          <li>Wsparcie w wyborze fachowców – rekomendacja sprawdzonych ekip wykonawczych.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">03</div>
+      <h3 data-i18n="svc3_title">Wnętrze Pod Klucz</h3>
+      <p data-i18n="svc3_desc">Dla tych, którzy chcą cieszyć się nowym wnętrzem bez konieczności angażowania się w przebieg prac. To kompleksowa usługa – zajmujemy się wszystkim: od projektu i koordynacji wykonawców, aż po oddanie gotowego, w pełni urządzonego wnętrza.</p>
+      <button class="service-expand" onclick="toggleDetails(this)" data-i18n="svc_details_btn">Details <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="service-details" data-i18n-html="svc3_details">
+        <ul>
+          <li>Wszystko z „Projektu Kompleksowego", a ponadto:</li>
+          <li>Nadzór nad harmonogramem i wykonawcami – stała kontrola przebiegu prac i terminów.</li>
+          <li>Koordynacja zakupów i dostaw – organizacja zamówień, transportu i montażu wyposażenia.</li>
+          <li>Kontrola jakości i zgodności z projektem – dopilnowanie, by każdy detal został wykonany zgodnie z założeniami.</li>
+          <li>Pełna opieka nad realizacją – kompleksowe prowadzenie inwestycji aż do oddania gotowego, w pełni urządzonego wnętrza.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="publications-header reveal">
+    <p class="section-label publications-label-big" data-i18n-skip="true">
+      <span class="pl-label">PUBLIKACJE</span>
+      <span class="en-label" style="display:none">PUBLICATI<span style="color:#fcb8db">O</span>NS</span>
+    </p>
+  </div>
+  <div class="publications-grid">
+
+    <a href="https://label-magazine.com/wnetrza/artykuly/zagladamy-do-46-metrowego-mieszkania-projektantow-wnetrz-w-krakowskim-bloku" target="_blank" rel="noopener" class="pub-card reveal">
+      <div class="pub-source">Label Magazine</div>
+      <h3 class="pub-title" data-i18n="pub1_title">Zaglądamy do 46-metrowego mieszkania projektantów wnętrz w krakowskim bloku</h3>
+      <p class="pub-desc" data-i18n="pub1_desc">„Nieoczywiste w pierwszym kontakcie, ale otulające" – tak opisują swoje mieszkanie właściciele pracowni 032 Atelier.</p>
+      <span class="pub-link" data-i18n="pub_read">Czytaj artykuł →</span>
+    </a>
+
+    <a href="https://www.whitemad.pl/ma-46-m-kw-krakowskie-mieszkanie-architektow/" target="_blank" rel="noopener" class="pub-card reveal">
+      <div class="pub-source">Whitemad</div>
+      <h3 class="pub-title" data-i18n="pub2_title">Ma 46 m kw. Krakowskie mieszkanie architektów</h3>
+      <p class="pub-desc" data-i18n="pub2_desc">46-metrowe mieszkanie w Krakowie zaprojektowane przez twórców 032 Atelier — przestrzeń dopasowana do codzienności.</p>
+      <span class="pub-link" data-i18n="pub_read">Czytaj artykuł →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <p class="section-label about-label-big" data-i18n="contact_label">Get in Touch</p>
+      <p data-i18n="contact_desc">Whether you're starting from scratch or reimagining what you already have, we'd love to hear about your project.</p>
+      <div class="contact-detail">
+        <label>Email</label>
+        <a href="mailto:info@032atelier.com">info@032atelier.com</a>
+      </div>
+      <div class="contact-detail">
+        <label data-i18n="contact_phone_label">Phone</label>
+        <a href="tel:+48739498025">+48 739 498 025</a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <input type="text" data-i18n-ph="ph_name" placeholder="Your Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" data-i18n-ph="ph_email" placeholder="Email Address" required>
+      </div>
+      <div class="form-group">
+        <input type="text" data-i18n-ph="ph_project" placeholder="Project Type">
+      </div>
+      <div class="form-group">
+        <textarea data-i18n-ph="ph_message" placeholder="Tell us about your project..."></textarea>
+      </div>
+      <button class="submit-btn" type="button" data-i18n="contact_submit">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span data-i18n="footer_copy">&copy; 2026 032 Atelier. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Pinterest</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  // ── HERO CROSS-HIGHLIGHT ──
+  const heroHeadline = document.querySelector('.hero-headline');
+  if (heroHeadline) {
+    const word1 = heroHeadline.querySelector('.hw-big:first-child');
+    const between = heroHeadline.querySelector('.hw-small');
+    const word2 = heroHeadline.querySelector('.hw-big:last-child');
+
+    function clearHighlights() {
+      [word1, between, word2].forEach(el => el.classList.remove('hw-highlighted'));
+    }
+
+    // Hover "functionality" → highlight "and everything in between" + "design"
+    word1.addEventListener('mouseenter', () => { clearHighlights(); between.classList.add('hw-highlighted'); word2.classList.add('hw-highlighted'); });
+    word1.addEventListener('mouseleave', clearHighlights);
+
+    // Hover "and everything in between" → highlight "functionality" + "design"
+    between.addEventListener('mouseenter', () => { clearHighlights(); word1.classList.add('hw-highlighted'); word2.classList.add('hw-highlighted'); });
+    between.addEventListener('mouseleave', clearHighlights);
+
+    // Hover "design" → highlight "functionality" + "and everything in between"
+    word2.addEventListener('mouseenter', () => { clearHighlights(); word1.classList.add('hw-highlighted'); between.classList.add('hw-highlighted'); });
+    word2.addEventListener('mouseleave', clearHighlights);
+  }
+  const translations = {
+    en: {
+      nav_portfolio: 'Projects',
+      nav_about: 'About',
+      nav_services: 'Services',
+      nav_publications: 'Publications',
+      nav_contact: 'Contact',
+      hero_tagline: 'Interior Design Studio',
+      hero_word1: 'functionality',
+      hero_between: 'and everything in between',
+      hero_word2: 'design',
+      hero_sub: 'We craft considered interiors that balance beauty and function — designing spaces where life unfolds naturally.',
+      hero_cta: 'View Our Work',
+      scroll: 'Scroll',
+      portfolio_label: 'Projects',
+      portfolio_see_all: 'See all projects',
+      proj1_type: 'Residential — Interior Design',
+      proj2_type: 'Residential — Interior Design',
+      about_label: 'About Us',
+      about_p1: '032 Atelier is a design studio born from a desire to create beauty and meaning in space. We believe that the environment we live in has a profound impact on our emotions and everyday life. That\'s why we design interiors that not only captivate with their aesthetics, but also make you feel natural and at ease.',
+      about_p2: 'Every project is a new story for us. We listen carefully, observe, and strive to truly understand our clients — their needs, daily rhythm, and dreams. We want our collaboration to be a calm, enjoyable journey toward creating a place that becomes a true home.',
+      about_p3: 'We don\'t limit ourselves to one style. We love projects with character and a touch of boldness that reflect the personality of their owners. We passionately discover the potential of every space — from modern apartments to interiors with history, where new life can be breathed in.',
+      about_p4: 'We don\'t create interiors for show — we design so that every detail has meaning and builds real value. If you think about space the way we do, we invite you to create exceptional interiors together.',
+      stat_years: 'Years experience',
+      stat_projects: 'Projects completed',
+      stat_countries: 'Countries',
+      services_label: 'Services',
+      svc1_title: 'Comprehensive Design',
+      svc1_desc: 'A comprehensive interior design is a full development of your space — from the initial concept to the finished technical project. It\'s the ideal option if you want to carry out the arrangement yourself, but need a professional plan, visualizations, and detailed guidelines for contractors.',
+      svc2_title: 'Design with Author Supervision',
+      svc2_desc: 'This solution is for those who want to be sure that the project will be executed exactly according to plan. Thanks to the constant care of the designer, every stage of work is monitored with attention to detail, guaranteeing a result consistent with the vision.',
+      svc3_title: 'Turnkey Interior',
+      svc3_desc: 'For those who want to enjoy a new interior without having to be involved in the process. This is a comprehensive service — we take care of everything: from design and contractor coordination, to handing over a fully furnished, ready-to-live interior.',
+      svc_details_btn: 'Details',
+      svc1_details: '<ul><li>Interior inventory — precise measurements of the space with photographic documentation.</li><li>2–3 functional layouts — different arrangement proposals tailored to your needs and lifestyle.</li><li>3D visualizations — realistic views of rooms that let you see the final result before execution.</li><li>Materials and furniture list — detailed list of elements used in the project with descriptions and links to manufacturers.</li><li>Technical documentation — construction drawings for the building team and carpenter.</li><li>Cost estimate and equipment list — help in planning the budget and controlling expenses.</li><li>Meeting with contractors — discussing the project assumptions and handing over complete implementation documentation.</li></ul>',
+      svc2_details: '<ul><li>Everything from "Comprehensive Design", plus:</li><li>Designer consultations during execution — ongoing support and advice at every stage.</li><li>On-site meetings — monitoring work progress and verifying compliance with the project.</li><li>Support in choosing specialists — recommendations for proven contractor teams.</li></ul>',
+      svc3_details: '<ul><li>Everything from "Comprehensive Design", plus:</li><li>Schedule and contractor supervision — constant monitoring of work progress and deadlines.</li><li>Purchase and delivery coordination — organizing orders, transport, and equipment installation.</li><li>Quality and compliance control — ensuring every detail is executed according to the plan.</li><li>Full project management — comprehensive investment management through to handing over a fully furnished, ready-to-live interior.</li></ul>',
+      contact_label: 'Get in Touch',
+      contact_desc: "Whether you're starting from scratch or reimagining what you already have, we'd love to hear about your project.",
+      contact_phone_label: 'Phone',
+      contact_studio_label: 'Studio',
+      contact_submit: 'Send Inquiry',
+      footer_copy: '&copy; 2026 032 Atelier. All rights reserved.',
+      pub1_title: 'A peek inside a 46 sqm apartment by interior designers in a Kraków block',
+      pub1_desc: '"Not obvious at first glance, but enveloping" — that\'s how the owners of 032 Atelier describe their apartment.',
+      pub2_title: '46 sqm. A Kraków apartment by architects',
+      pub2_desc: 'A 46 sqm apartment in Kraków designed by 032 Atelier — a space tailored to everyday life.',
+      pub_read: 'Read article →',
+      ph_name: 'Your Name',
+      ph_email: 'Email Address',
+      ph_project: 'Project Type',
+      ph_message: 'Tell us about your project...'
+    },
+    pl: {
+      nav_portfolio: 'Wnętrza',
+      nav_about: 'O nas',
+      nav_services: 'Usługi',
+      nav_publications: 'Publikacje',
+      nav_contact: 'Kontakt',
+      hero_tagline: 'Pracownia Projektowania Wnętrz',
+      hero_word1: 'functionality',
+      hero_between: 'and everything in between',
+      hero_word2: 'design',
+      hero_sub: 'Tworzymy przemyślane wnętrza, łącząc piękno z funkcjonalnością — projektujemy przestrzenie, w których życie toczy się naturalnie.',
+      hero_cta: 'Zobacz nasze prace',
+      scroll: 'Przewiń',
+      portfolio_label: 'Wnętrza',
+      portfolio_see_all: 'Zobacz wszystkie projekty',
+      proj1_type: 'Mieszkanie — Projekt wnętrz',
+      proj2_type: 'Mieszkanie — Projekt wnętrz',
+      about_label: 'O nas',
+      about_p1: '032 Atelier to studio projektowe powstałe z potrzeby tworzenia piękna i sensów w przestrzeni. Wierzymy, że otoczenie, w którym żyjemy, ma ogromny wpływ na nasze emocje i codzienność. Dlatego projektujemy wnętrza, które nie tylko zachwycają estetyką, ale też sprawiają, że czujesz się w nich naturalnie i swobodnie.',
+      about_p2: 'Każdy projekt to dla nas nowa historia. Uważnie słuchamy, obserwujemy i staramy się naprawdę zrozumieć naszych klientów – ich potrzeby, rytm dnia i marzenia. Chcemy, by współpraca z nami była spokojną, przyjemną drogą do stworzenia miejsca, które stanie się prawdziwym domem.',
+      about_p3: 'Nie ograniczamy się do jednego stylu. Lubimy projekty z charakterem i odrobiną odwagi, które odzwierciedlają osobowość ich właścicieli. Z pasją odkrywamy potencjał każdej przestrzeni – od nowoczesnych mieszkań po wnętrza z historią, w których można tchnąć nowe życie.',
+      about_p4: 'Nie tworzymy wnętrz na pokaz – projektujemy tak, by każdy detal miał sens i budował prawdziwą wartość. Jeśli myślisz o przestrzeni podobnie jak my, zapraszamy do wspólnego tworzenia wyjątkowych wnętrz.',
+      stat_years: 'Lat doświadczenia',
+      stat_projects: 'Zrealizowanych projektów',
+      stat_countries: 'Kraje',
+      services_label: 'Zakres Usług',
+      svc1_title: 'Projekt Kompleksowy',
+      svc1_desc: 'Kompleksowy projekt wnętrza to pełne opracowanie Twojej przestrzeni – od pierwszej koncepcji po gotowy projekt techniczny. To idealna opcja, jeśli chcesz samodzielnie zrealizować aranżację, ale potrzebujesz profesjonalnego planu, wizualizacji i szczegółowych wytycznych dla wykonawców.',
+      svc2_title: 'Projekt z Nadzorem Autorskim',
+      svc2_desc: 'To rozwiązanie dla osób, które chcą mieć pewność, że realizacja projektu przebiegnie dokładnie zgodnie z założeniami. Dzięki stałej opiece projektanta każdy etap prac jest kontrolowany z dbałością o detale, co gwarantuje efekt zgodny z wizją.',
+      svc3_title: 'Wnętrze Pod Klucz',
+      svc3_desc: 'Dla tych, którzy chcą cieszyć się nowym wnętrzem bez konieczności angażowania się w przebieg prac. To kompleksowa usługa – zajmujemy się wszystkim: od projektu i koordynacji wykonawców, aż po oddanie gotowego, w pełni urządzonego wnętrza.',
+      svc_details_btn: 'Szczegóły',
+      svc1_details: '<ul><li>Inwentaryzacja wnętrza – dokładne pomiary przestrzeni wraz z dokumentacją fotograficzną.</li><li>2–3 układy funkcjonalne – różne propozycje aranżacji, dopasowane do Twoich potrzeb i stylu życia.</li><li>Wizualizacje 3D – realistyczne ujęcia pomieszczeń, które pozwolą Ci zobaczyć efekt końcowy przed realizacją.</li><li>Zestawienie materiałów i mebli – szczegółowa lista elementów użytych w projekcie wraz z opisem i linkami do producentów.</li><li>Dokumentacja techniczna – rysunki wykonawcze dla ekipy budowlanej i stolarza.</li><li>Kosztorys i lista wyposażenia – pomoc w zaplanowaniu budżetu oraz kontrola wydatków.</li><li>Spotkanie z wykonawcami – omówienie założeń projektu i przekazanie pełnej dokumentacji realizacyjnej.</li></ul>',
+      svc2_details: '<ul><li>Wszystko z „Projektu Kompleksowego", a dodatkowo:</li><li>Konsultacje z projektantem w trakcie realizacji – bieżące wsparcie i doradztwo na każdym etapie.</li><li>Spotkania na budowie – kontrola postępu prac oraz weryfikacja zgodności z projektem.</li><li>Wsparcie w wyborze fachowców – rekomendacja sprawdzonych ekip wykonawczych.</li></ul>',
+      svc3_details: '<ul><li>Wszystko z „Projektu Kompleksowego", a ponadto:</li><li>Nadzór nad harmonogramem i wykonawcami – stała kontrola przebiegu prac i terminów.</li><li>Koordynacja zakupów i dostaw – organizacja zamówień, transportu i montażu wyposażenia.</li><li>Kontrola jakości i zgodności z projektem – dopilnowanie, by każdy detal został wykonany zgodnie z założeniami.</li><li>Pełna opieka nad realizacją – kompleksowe prowadzenie inwestycji aż do oddania gotowego, w pełni urządzonego wnętrza.</li></ul>',
+      contact_label: 'Kontakt',
+      contact_desc: 'Niezależnie od tego, czy zaczynasz od zera, czy chcesz odmienić istniejącą przestrzeń — chętnie poznamy Twój projekt.',
+      contact_phone_label: 'Telefon',
+      contact_studio_label: 'Pracownia',
+      contact_submit: 'Wyślij zapytanie',
+      footer_copy: '&copy; 2026 032 Atelier. Wszelkie prawa zastrzeżone.',
+      pub1_title: 'Zaglądamy do 46-metrowego mieszkania projektantów wnętrz w krakowskim bloku',
+      pub1_desc: '„Nieoczywiste w pierwszym kontakcie, ale otulające" – tak opisują swoje mieszkanie właściciele pracowni 032 Atelier.',
+      pub2_title: 'Ma 46 m kw. Krakowskie mieszkanie architektów',
+      pub2_desc: '46-metrowe mieszkanie w Krakowie zaprojektowane przez twórców 032 Atelier — przestrzeń dopasowana do codzienności.',
+      pub_read: 'Czytaj artykuł →',
+      ph_name: 'Twoje imię',
+      ph_email: 'Adres e-mail',
+      ph_project: 'Typ projektu',
+      ph_message: 'Opowiedz nam o swoim projekcie...'
+    }
+  };
+
+  function toggleDetails(btn) {
+    const details = btn.nextElementSibling;
+    btn.classList.toggle('open');
+    details.classList.toggle('open');
+  }
+
+  // Align "Details" buttons across service cards
+  function alignServiceButtons() {
+    const cards = document.querySelectorAll('.service-card');
+    const paragraphs = document.querySelectorAll('.service-card > p');
+    // Reset
+    paragraphs.forEach(p => p.style.minHeight = '');
+    // Find max offset of expand button
+    let maxTop = 0;
+    const buttons = document.querySelectorAll('.service-expand');
+    buttons.forEach(btn => {
+      const card = btn.closest('.service-card');
+      const cardTop = card.getBoundingClientRect().top;
+      const btnTop = btn.getBoundingClientRect().top;
+      const offset = btnTop - cardTop;
+      if (offset > maxTop) maxTop = offset;
+    });
+    // Set each paragraph's min-height to push button to maxTop
+    buttons.forEach(btn => {
+      const card = btn.closest('.service-card');
+      const p = card.querySelector(':scope > p');
+      const cardTop = card.getBoundingClientRect().top;
+      const btnTop = btn.getBoundingClientRect().top;
+      const offset = btnTop - cardTop;
+      const diff = maxTop - offset;
+      if (diff > 0 && p) {
+        p.style.minHeight = (p.offsetHeight + diff) + 'px';
+      }
+    });
+  }
+
+  window.addEventListener('load', alignServiceButtons);
+  window.addEventListener('resize', alignServiceButtons);
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const dict = translations[lang];
+
+    // Update text content
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) {
+        if (el.tagName === 'BUTTON' && el.classList.contains('service-expand')) {
+          el.innerHTML = dict[key] + ' <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>';
+        } else {
+          el.innerHTML = dict[key];
+        }
+      }
+    });
+
+    // Update HTML content (for expandable details)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (dict[key]) el.innerHTML = dict[key];
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+      const key = el.getAttribute('data-i18n-ph');
+      if (dict[key]) el.placeholder = dict[key];
+    });
+
+    // Update active button
+    document.getElementById('langEN').classList.toggle('active', lang === 'en');
+    document.getElementById('langPL').classList.toggle('active', lang === 'pl');
+
+    // Toggle split labels (Publications)
+    document.querySelectorAll('.pl-label').forEach(el => {
+      el.style.display = lang === 'pl' ? '' : 'none';
+    });
+    document.querySelectorAll('.en-label').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+
+    // Update html lang attribute
+    document.documentElement.lang = lang;
+
+    // Save preference
+    localStorage.setItem('lang', lang);
+
+    // Re-align service buttons after text changes
+    setTimeout(alignServiceButtons, 50);
+  }
+
+  // Load saved preference
+  const savedLang = localStorage.getItem('lang');
+  if (savedLang) {
+    setLang(savedLang);
+  } else {
+    document.querySelectorAll('.pl-label').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.en-label').forEach(el => el.style.display = '');
+  }
+
+  // Nav scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile nav
+  const toggle = document.getElementById('mobileToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  function closeNav() { navLinks.classList.remove('open'); }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+</script>
+
+</body>
+</html>
