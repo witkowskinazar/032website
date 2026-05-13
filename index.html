@@ -960,6 +960,30 @@
 </head>
 <body>
 
+<!-- UNDER CONSTRUCTION BANNER -->
+<div id="construction-banner" style="
+  width:100%;
+  background:#1a1a1a;
+  color:#aaa;
+  text-align:center;
+  padding:0.6rem 2rem;
+  font-family:'Outfit',sans-serif;
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  position:relative;
+  z-index:200;
+">
+  <span class="pl-banner" style="display:none">
+    Strona w budowie — niektóre sekcje mogą być niedostępne. Śledź nasze realizacje na
+    <a href="https://www.instagram.com/032atelier?igsh=NjN6enNqMXVzazE4" target="_blank" style="color:#fcb8db;text-decoration:none;">Instagram</a>
+  </span>
+  <span class="en-banner">
+    Site under construction — some pages may be unavailable. For the latest work visit our
+    <a href="https://www.instagram.com/032atelier?igsh=NjN6enNqMXVzazE4" target="_blank" style="color:#fcb8db;text-decoration:none;">Instagram</a>
+  </span>
+</div>
+
 <!-- NAV -->
 <nav id="navbar">
   <a href="#" class="logo">032 Atelier</a>
@@ -1365,6 +1389,14 @@
       el.style.display = lang === 'en' ? '' : 'none';
     });
 
+    // Toggle construction banner
+    document.querySelectorAll('.pl-banner').forEach(el => {
+      el.style.display = lang === 'pl' ? '' : 'none';
+    });
+    document.querySelectorAll('.en-banner').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+
     // Update html lang attribute
     document.documentElement.lang = lang;
 
@@ -1382,6 +1414,8 @@
   } else {
     document.querySelectorAll('.pl-label').forEach(el => el.style.display = 'none');
     document.querySelectorAll('.en-label').forEach(el => el.style.display = '');
+    document.querySelectorAll('.pl-banner').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.en-banner').forEach(el => el.style.display = '');
   }
 
   // Nav scroll effect
