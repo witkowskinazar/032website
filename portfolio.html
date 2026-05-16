@@ -144,12 +144,30 @@
     z-index: 10;
   }
 
+  .gallery-header > div {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
   .gallery-title {
-    font-family: var(--font-body);
-    font-size: 1.2rem;
+    font-family: 'Wire One', sans-serif;
+    font-size: 2rem;
     font-weight: 400;
-    color: var(--charcoal);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #000;
+  }
+
+  .gallery-desc {
+    font-family: 'Wire One', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #000;
+    margin-top: 0.3rem;
   }
 
   .gallery-close {
@@ -329,7 +347,10 @@
 <!-- GALLERY OVERLAY -->
 <div class="gallery-overlay" id="galleryOverlay">
   <div class="gallery-header">
-    <span class="gallery-title" id="galleryTitle">Project</span>
+    <div>
+      <span class="gallery-title" id="galleryTitle">Project</span>
+      <div class="gallery-desc" id="galleryDesc"></div>
+    </div>
     <button class="gallery-close" onclick="closeGallery()">
       <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
       Close
@@ -372,7 +393,7 @@
   ─────────────────────────────────────────────────────
   */
   const projects = {
-    project1: { images: [
+    project1: { desc: 'Kraków, 46 m² · Inwestor prywatny', images: [
       'images/Banacha_1.jpg','images/Banacha_2.jpg','images/Banacha_3.jpg',
       'images/Banacha_4.jpg','images/Banacha_5.jpg','images/Banacha_6.jpg',
       'images/Banacha_7.jpg','images/Banacha_8.jpg','images/Banacha_9.jpg',
@@ -388,7 +409,7 @@
       'images/Obriy_10.jpg','images/Obriy_11.jpg','images/Obriy_12.jpg',
       'images/Obriy_13.jpg','images/Obriy_14.jpg','images/Obriy_15.jpg',
     ] },
-    project3: { images: [
+    project3: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Bialoruska_1.jpg','images/Bialoruska_2.jpg','images/Bialoruska_3.jpg',
       'images/Bialoruska_4.jpg','images/Bialoruska_5.jpg','images/Bialoruska_6.jpg',
       'images/Bialoruska_7.jpg','images/Bialoruska_8.jpg','images/Bialoruska_9.jpg',
@@ -396,14 +417,14 @@
       'images/Bialoruska_13.jpg','images/Bialoruska_15.jpg','images/Bialoruska_16.jpg',
       'images/Bialoruska_17.jpg',
     ] },
-    project4: { images: [
+    project4: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Jezmanowskiego_1.jpg','images/Jezmanowskiego_2.jpg','images/Jezmanowskiego_3.jpg',
       'images/Jezmanowskiego_4.jpg','images/Jezmanowskiego_5.jpg','images/Jezmanowskiego_6.jpg',
       'images/Jezmanowskiego_7.jpg','images/Jezmanowskiego_8.jpg','images/Jezmanowskiego_9.jpg',
       'images/Jezmanowskiego_10.jpg','images/Jezmanowskiego_11.jpg','images/Jezmanowskiego_12.jpg',
       'images/Jezmanowskiego_13.jpg','images/Jezmanowskiego_14.jpg',
     ] },
-    project5: { images: [
+    project5: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/SanMarko_1.jpg','images/SanMarko_2.jpg','images/SanMarko_3.jpg',
       'images/SanMarko_4.jpg','images/SanMarko_5.jpg','images/SanMarko_6.jpg',
       'images/SanMarko_7.jpg','images/SanMarko_8.jpg','images/SanMarko_9.jpg',
@@ -411,7 +432,7 @@
       'images/SanMarko_13.jpg','images/SanMarko_14.jpg','images/SanMarko_15.jpg',
       'images/SanMarko_16.jpg','images/SanMarko_17.jpg','images/SanMarko_18.jpg',
     ] },
-    project6: { images: [
+    project6: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Dabrowa_1.jpg','images/Dabrowa_2.jpg','images/Dabrowa_3.jpg',
       'images/Dabrowa_4.jpg','images/Dabrowa_5.jpg','images/Dabrowa_6.jpg',
       'images/Dabrowa_7.jpg','images/Dabrowa_8.jpg','images/Dabrowa_9.jpg',
@@ -419,27 +440,27 @@
       'images/Dabrowa_13.jpg','images/Dabrowa_14.jpg','images/Dabrowa_15.jpg',
       'images/Dabrowa_16.jpg',
     ] },
-    project7: { images: [
+    project7: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Tatarska_1.jpg','images/Tatarska_2.jpg','images/Tatarska_3.jpg',
       'images/Tatarska_4.jpg','images/Tatarska_5.jpg','images/Tatarska_6.jpg',
     ] },
-    project8: { images: [
+    project8: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/AuroomCity_1.jpg','images/AuroomCity_2.jpg','images/AuroomCity_3.jpg',
       'images/AuroomCity_4.jpg','images/AuroomCity_5.jpg','images/AuroomCity_6.jpg',
       'images/AuroomCity_7.jpg','images/AuroomCity_8.jpg','images/AuroomCity_9.jpg',
       'images/AuroomCity_10.jpg','images/AuroomCity_11.jpg',
     ] },
-    project9: { images: [
+    project9: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Mysliwska_1.jpg','images/Mysliwska_2.jpg','images/Mysliwska_3.jpg',
       'images/Mysliwska_4.jpg','images/Mysliwska_5.jpg','images/Mysliwska_6.jpg',
       'images/Mysliwska_7.jpg','images/Mysliwska_8.jpg','images/Mysliwska_9.jpg',
       'images/Mysliwska_10.jpg',
     ] },
-    project10: { images: [
+    project10: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Podhalanska_1.jpg','images/Podhalanska_2.jpg','images/Podhalanska_3.jpg',
       'images/Podhalanska_4.jpg','images/Podhalanska_5.jpg','images/Podhalanska_6.jpg',
     ] },
-    project11: { images: [
+    project11: { desc: 'Kraków · Inwestor prywatny', images: [
       'images/Kamieniec_1.jpg','images/Kamieniec_2.jpg','images/Kamieniec_3.jpg',
       'images/Kamieniec_4.jpg','images/Kamieniec_5.jpg','images/Kamieniec_6.jpg',
       'images/Kamieniec_7.jpg','images/Kamieniec_8.jpg',
@@ -461,6 +482,7 @@
     const titleEl = document.getElementById('galleryTitle');
 
     titleEl.textContent = title;
+    document.getElementById('galleryDesc').textContent = projects[projectId]?.desc || '';
     grid.innerHTML = '';
     currentImages = [];
 
