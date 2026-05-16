@@ -410,6 +410,7 @@
   /* ── ABOUT ── */
   #about {
     background: var(--cream);
+    text-align: center;
   }
 
   .about-grid {
@@ -444,6 +445,10 @@
     line-height: 1.9;
     color: var(--stone);
     margin-bottom: 1.5rem;
+    text-align: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .about-label-big.section-label {
@@ -960,29 +965,8 @@
 </head>
 <body>
 
-<!-- UNDER CONSTRUCTION BANNER -->
-<div id="construction-banner" style="
-  width:100%;
-  background:#1a1a1a;
-  color:#aaa;
-  text-align:center;
-  padding:0.6rem 2rem;
-  font-family:'Outfit',sans-serif;
-  font-size:0.72rem;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  position:relative;
-  z-index:200;
-">
-  <span class="pl-banner" style="display:none">
-    Strona w budowie — niektóre sekcje mogą być niedostępne. Śledź nasze realizacje na
-    <a href="https://www.instagram.com/032atelier?igsh=NjN6enNqMXVzazE4" target="_blank" style="color:#fcb8db;text-decoration:none;">Instagram</a>
-  </span>
-  <span class="en-banner">
-    Site under construction — some pages may be unavailable. For the latest work visit our
-    <a href="https://www.instagram.com/032atelier?igsh=NjN6enNqMXVzazE4" target="_blank" style="color:#fcb8db;text-decoration:none;">Instagram</a>
-  </span>
-</div>
+
+
 
 <!-- NAV -->
 <nav id="navbar">
@@ -1024,30 +1008,15 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="about-grid">
-    <div class="about-image reveal">
-      <img src="images/about-photo.png" alt="032 Atelier — Team" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="about-text reveal">
-      <p class="section-label about-label-big" data-i18n="about_label">About Us</p>
+  <div class="about-text reveal">
+      <p class="section-label about-label-big" data-i18n-skip="true">
+        <span class="pl-label">O N<span style="color:#fcb8db">A</span>S</span>
+        <span class="en-label" style="display:none">A<span style="color:#fcb8db">B</span>OUT US</span>
+      </p>
       <p data-i18n="about_p1">032 Atelier is a design studio born from a desire to create beauty and meaning in space. We believe that the environment we live in has a profound impact on our emotions and everyday life. That's why we design interiors that not only captivate with their aesthetics, but also make you feel natural and at ease.</p>
       <p data-i18n="about_p2">Every project is a new story for us. We listen carefully, observe, and strive to truly understand our clients — their needs, daily rhythm, and dreams. We want our collaboration to be a calm, enjoyable journey toward creating a place that becomes a true home.</p>
       <p data-i18n="about_p3">We don't limit ourselves to one style. We love projects with character and a touch of boldness that reflect the personality of their owners. We passionately discover the potential of every space — from modern apartments to interiors with history, where new life can be breathed in.</p>
       <p data-i18n="about_p4">We don't create interiors for show — we design so that every detail has meaning and builds real value. If you think about space the way we do, we invite you to create exceptional interiors together.</p>
-      <div class="about-stats">
-        <div class="stat">
-          <h4>12+</h4>
-          <span data-i18n="stat_years">Years experience</span>
-        </div>
-        <div class="stat">
-          <h4>85</h4>
-          <span data-i18n="stat_projects">Projects completed</span>
-        </div>
-        <div class="stat">
-          <h4>3</h4>
-          <span data-i18n="stat_countries">Countries</span>
-        </div>
-      </div>
     </div>
   </div>
 </section>
