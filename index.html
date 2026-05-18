@@ -977,49 +977,26 @@
   transition:opacity 0.8s ease;
 ">
   <video id="introVideo" autoplay muted playsinline style="
-    max-width:100%;
-    max-height:100%;
-    width:auto;
-    height:auto;
+    width:371px;
+    height:678px;
+    object-fit:cover;
   ">
     <source src="videos/intro.mp4" type="video/mp4">
   </video>
   <button id="soundBtn" onclick="toggleSound()" style="
-    position:absolute;
-    bottom:2.5rem;
-    left:2.5rem;
-    background:none;
-    border:1px solid rgba(255,255,255,0.4);
-    color:rgba(255,255,255,0.7);
-    font-family:'Outfit',sans-serif;
-    font-size:0.65rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    padding:0.6rem 1.4rem;
-    cursor:pointer;
-    transition:all 0.3s;
-  " onmouseover="this.style.borderColor='#fcb8db';this.style.color='#fcb8db'"
-     onmouseout="this.style.borderColor='rgba(255,255,255,0.4)';this.style.color='rgba(255,255,255,0.7)'">
-    🔇 Sound Off
-  </button>
+    position:absolute;bottom:2.5rem;left:2.5rem;
+    background:none;border:1px solid rgba(255,255,255,0.4);
+    color:rgba(255,255,255,0.7);font-family:'Outfit',sans-serif;
+    font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+    padding:0.6rem 1.4rem;cursor:pointer;transition:all 0.3s;
+  ">🔇 Sound Off</button>
   <button onclick="skipIntro()" style="
-    position:absolute;
-    bottom:2.5rem;
-    right:2.5rem;
-    background:none;
-    border:1px solid rgba(255,255,255,0.4);
-    color:rgba(255,255,255,0.7);
-    font-family:'Outfit',sans-serif;
-    font-size:0.65rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    padding:0.6rem 1.4rem;
-    cursor:pointer;
-    transition:all 0.3s;
-  " onmouseover="this.style.borderColor='#fcb8db';this.style.color='#fcb8db'"
-     onmouseout="this.style.borderColor='rgba(255,255,255,0.4)';this.style.color='rgba(255,255,255,0.7)'">
-    Skip
-  </button>
+    position:absolute;bottom:2.5rem;right:2.5rem;
+    background:none;border:1px solid rgba(255,255,255,0.4);
+    color:rgba(255,255,255,0.7);font-family:'Outfit',sans-serif;
+    font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+    padding:0.6rem 1.4rem;cursor:pointer;transition:all 0.3s;
+  ">Skip</button>
 </div>
 
 <script>
@@ -1043,8 +1020,6 @@
   }
 
   introVideo.addEventListener('ended', skipIntro);
-
-  // Fallback: if video fails to load, skip after 1s
   introVideo.addEventListener('error', () => setTimeout(skipIntro, 1000));
 </script>
 
