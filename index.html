@@ -966,7 +966,7 @@
     .lang-divider { color: rgba(255,255,255,0.4); }
     .mobile-toggle span { background: rgba(255,255,255,0.85); }
 
-    /* 2) Hero headline wraps properly */
+    /* Hero headline wraps properly */
     .hero-headline {
       white-space: normal;
       flex-wrap: wrap;
@@ -977,14 +977,17 @@
     .hw-big { font-size: clamp(1.6rem, 8vw, 2.5rem); }
     .hw-small { font-size: clamp(0.6rem, 3vw, 0.9rem); width: 100%; text-align: center; }
 
-    /* 2) Fix overlap between CTA and scroll hint */
-    .hero-cta { margin-top: 2rem; }
-    .scroll-hint { bottom: 1.5rem; }
-
-    /* 3) Przewiń centered */
+    /* Fix overlap + Przewiń centered */
+    .hero-cta { margin-top: 1.5rem; }
     .scroll-hint {
-      left: 50%;
-      transform: translateX(-50%);
+      position: absolute;
+      bottom: 1.5rem;
+      left: 0;
+      right: 0;
+      width: 100%;
+      transform: none;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       text-align: center;
     }
@@ -1066,9 +1069,9 @@
     <li><a href="#contact" onclick="closeNav()" data-i18n="nav_contact">Contact</a></li>
   </ul>
   <div class="lang-switch">
-    <button id="langEN" class="active" onclick="setLang('en')">EN</button>
+    <button id="langEN" onclick="setLang('en')">EN</button>
     <span class="lang-divider">|</span>
-    <button id="langPL" onclick="setLang('pl')">PL</button>
+    <button id="langPL" class="active" onclick="setLang('pl')">PL</button>
   </div>
   <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1468,10 +1471,7 @@
   if (savedLang) {
     setLang(savedLang);
   } else {
-    document.querySelectorAll('.pl-label').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('.en-label').forEach(el => el.style.display = '');
-    document.querySelectorAll('.pl-banner').forEach(el => el.style.display = 'none');
-    document.querySelectorAll('.en-banner').forEach(el => el.style.display = '');
+    setLang('pl');
   }
 
   // Nav scroll effect
