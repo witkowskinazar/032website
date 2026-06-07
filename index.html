@@ -1052,12 +1052,19 @@
   }
 
   function skipIntro() {
+    introVideo.pause();
+    introVideo.muted = true;
     introOverlay.style.opacity = '0';
     setTimeout(() => introOverlay.style.display = 'none', 800);
   }
 
   introVideo.addEventListener('ended', skipIntro);
   introVideo.addEventListener('error', () => setTimeout(skipIntro, 1000));
+
+  // If arriving from another page (e.g. portfolio Home button), skip intro
+  if (window.location.hash === '#home') {
+    skipIntro();
+  }
 </script>
 
 
